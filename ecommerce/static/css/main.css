@@ -36,14 +36,17 @@ h1,h2,h3,h4,h5,h6{
 }
 
 #cart-total{
-	display: block;
+	display: inline;
+    position: relative;
 	text-align: center;
 	color:#fff;
 	background-color: red;
-	width: 20px;
-	height: 25px;
 	border-radius: 50%;
 	font-size: 14px;
+    padding: 0 5px;
+    bottom: 10px;
+    right: 8px;
+
 }
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
