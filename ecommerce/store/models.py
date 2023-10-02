@@ -29,3 +29,10 @@ class Order(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+
+class OrderItem(models.Mode):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
+    quantity = models.IntegerField(blank=True, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
