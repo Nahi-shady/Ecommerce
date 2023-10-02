@@ -3,8 +3,8 @@ from .models import *
 
 # Register your models here.
 
-admin.register(Customer)
-admin.register(Product)
-admin.register(Order)
-admin.register(OrderItem)
-admin.register(ShippingAddress)
+admin.site.register(Customer)
+admin.site.register(Product)
+admin.site.register(Order)
+admin.site.register(OrderItem)
+admin.site.register(ShippingAddress)
