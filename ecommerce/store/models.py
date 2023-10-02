@@ -16,12 +16,12 @@ class Product(models.Model):
     name = models.CharField(max_length=50, null=True)
     price = models.FloatField()
     digital = models.BooleanField(default=False, null=True, blank=False)
-    images = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
     
     @property
     def imageUrl(self):
         try:
-            url = self.images.url
+            url = self.image.url
         except:
             url = ''
         return url
