@@ -37,6 +37,12 @@ class Order(models.Model):
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=50, null=True)
     
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitems_set.all()
+        
+        return sum([item.get_total for item in orderitems])
+
     def __str__(self):
         return str(self.id)
 
