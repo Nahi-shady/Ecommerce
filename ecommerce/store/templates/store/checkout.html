@@ -24,13 +24,7 @@
 							<input class="form-control" type="text" name="city" placeholder="City..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="state" placeholder="State..">
-						</div>
-						<div class="form-field">
 							<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-						</div>
-						<div class="form-field">
-							<input class="form-control" type="text" name="country" placeholder="Zip code..">
 						</div>
 					</div>
 					<hr>
@@ -68,6 +62,8 @@
 	</div>
 	<script type="text/javascript">
 		var shipping = '{{order.shipping}}'
+		var total = '{{order.get_cart_total}}'
+
 		if (shipping == 'False'){
 			document.getElementById('shipping-info').innerHTML = ''
 		}
@@ -96,6 +92,48 @@
 
 		function submitFormData(){
 			console.log('payment submitted')
+
+			var userFormData = {
+				'name': null,
+				'email': null,
+				'total': total,
+			}
+			var shippingInfo = {
+				'address': null,
+				'city': null,
+				'zipcode': null,
+			}
+			if(shipping != 'False'){
+				shippingInfo.address = form.address.value
+				shippingInfo.city = form.city.value
+				shippingInfo.zipcode = form.zipcode.value
+			}
+			
+			if(user == 'AnonymousUser'){
+				shippingInfo.name = form.name.value
+				shippingInfo.email = form.email.value
+			}
+
+			var url = '/process_order/'
+
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrftoken,
+				},
+				body:JSON.stringify({'form': userFormData, 'shipping': shippingInfo,})
+			})
+
+			.then((response) =>{
+				return response.json()
+			})
+
+			.then((data) =>{
+				console.log('Success', data)
+				alert('Transaction completed')
+				window.location.href = "{% url 'store' %}"
+			})
 		}
 
 	</script>
