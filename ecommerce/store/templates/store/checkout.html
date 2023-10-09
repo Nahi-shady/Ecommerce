@@ -13,28 +13,26 @@
 							<input required class="form-control" type="email" name="email" placeholder="Email..">
 						</div>
 					</div>
-					{% if order.shipping %}
-						<div id="shipping-info">
-							<hr>
-							<p>Shipping Information:</p>
-							<hr>
-							<div class="form-field">
-								<input class="form-control" type="text" name="address" placeholder="Address..">
-							</div>
-							<div class="form-field">
-								<input class="form-control" type="text" name="city" placeholder="City..">
-							</div>
-							<div class="form-field">
-								<input class="form-control" type="text" name="state" placeholder="State..">
-							</div>
-							<div class="form-field">
-								<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-							</div>
-							<div class="form-field">
-								<input class="form-control" type="text" name="country" placeholder="Zip code..">
-							</div>
+					<div id="shipping-info">
+						<hr>
+						<p>Shipping Information:</p>
+						<hr>
+						<div class="form-field">
+							<input class="form-control" type="text" name="address" placeholder="Address..">
 						</div>
-					{% endif %}
+						<div class="form-field">
+							<input class="form-control" type="text" name="city" placeholder="City..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="state" placeholder="State..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+						</div>
+						<div class="form-field">
+							<input class="form-control" type="text" name="country" placeholder="Zip code..">
+						</div>
+					</div>
 					<hr>
 					<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
 				</form>
@@ -43,6 +41,8 @@
 			<br>
 			<div class="box-element hidden" id="payment-info">
 				<small>Paypal Options</small>
+				<br>
+				<button id="make-payment" class="btn btn-success btn-block">Make Payment</button>
 			</div>
 			
 		</div>
@@ -66,4 +66,38 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		var shipping = '{{order.shipping}}'
+		if (shipping == 'False'){
+			document.getElementById('shipping-info').innerHTML = ''
+		}
+		if (user != 'AnonymousUser'){
+			document.getElementById('user-info').innerHTML = ''
+		}
+
+		if (shipping == 'False' && user != 'AnonymousUser'){
+			document.getElementById('form-wrapper').classList.add('hidden')
+			document.getElementById('payment-info').classList.remove('hidden')
+		
+		}
+
+		var form = document.getElementById('form')
+		form.addEventListener('submit', function(e){
+			e.preventDefault()
+			console.log('form submitted')
+
+			document.getElementById('form-button').classList.add('hidden')
+			document.getElementById('payment-info').classList.remove('hidden')
+		})
+		
+		document.getElementById('make-payment').addEventListener('click', function(e){
+			submitFormData()
+		})
+
+		function submitFormData(){
+			console.log('payment submitted')
+		}
+
+	</script>
+
 {% endblock content %}
