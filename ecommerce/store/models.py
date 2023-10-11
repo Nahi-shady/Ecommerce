@@ -49,7 +49,15 @@ class Order(models.Model):
 
         return sum([item.quantity for item in orderitems])
 
-
+    @property
+    def shipping(self):
+        shipping = False
+        orderItems = self.orderitem_set.all()
+        for i in orderItems:
+            if i.product.digital == False:
+                shipping = True
+                break
+        return shipping
 
     def __str__(self):
         return str(self.id)
