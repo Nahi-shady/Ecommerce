@@ -75,20 +75,20 @@ def processOrder(request):
         total = float(data['form']['total'])
         order.transaction_id = transaction_id
 
-        if total == order.get_cart_total:
-            order.complete = True
-        order.save()
-
-        if order.shipping == True:
-            ShippingAddress.objects.create(
-                customer=customer,
-                order=order,
-                address=data['shipping']['address'],
-                city=data['shipping']['city'],
-                zipcode=data['shipping']['zipcode'],
-            )
-
     else:
-        print('user is not logged in!')
+        customer, order = guestOrder(request, order)
+
+    if total == order.get_cart_total:
+        order.complete = True
+    order.save()
+
+    if order.shipping == True:
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['shipping']['address'],
+            city=data['shipping']['city'],
+            zipcode=data['shipping']['zipcode'],
+        )
 
     return JsonResponse('payment complete', safe=False)
